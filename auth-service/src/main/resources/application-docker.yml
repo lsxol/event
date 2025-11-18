@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres-auth:15432/auth_db?currentSchema=auth
+    username: authuser
+    password: authpassword
+    driver-class-name: org.postgresql.Driver
+
+  kafka:
+    bootstrap-servers: kafka:9092
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        check_nullability: true
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _audit
+            revision_field_name: revision_id
+            revision_type_field_name: revision_type
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+  liquibase:
+    default-schema: auth
+    enabled: true
+
+server:
+  port: 8000
+  servlet:
+    context-path: /api
+
+application:
+  jwt:
+    secret-key: MzE5d0FzN0ZQcDJyOUlYZnlpU2R5V0FLQXhGNWRtMHc
+    expiration-ms: 3600000
