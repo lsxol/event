@@ -6,15 +6,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public final class UzytkownikExceptionUtil {
 
-  public final static String EMAIL = "e-mail";
-
-  public static Supplier<UzytkownikException> nieZnalezionoUzytkownikaException(String zmienna,
-      String identyfikator) {
-    return () -> new NieZnalezionoUzytkownikaException(zmienna, identyfikator);
+  public static Supplier<UzytkownikException> nieZnalezionoUzytkownikaException() {
+    return NieZnalezionoUzytkownikaException::new;
   }
 
   public static UzytkownikException brakWymaganychDanychDoUtworzeniaUzytkownika() {
     return new NieMoznaUtworzycUzytkownikaException();
+  }
+
+  public static UzytkownikException brakWymaganychDanychDoZalogowaniaUzytkownika() {
+    return new NieMoznaZalogowacUzytkownikaException();
   }
 
   public static UzytkownikException uzytkownikOPodanymMejluIstniejeException() {
@@ -23,6 +24,10 @@ public final class UzytkownikExceptionUtil {
 
   public static UzytkownikException hasloZaSlabe() {
     return new HasloZaSlabeException();
+  }
+
+  public static UzytkownikException emailZlyFormat() {
+    return new EmailZlyFormatException();
   }
 
 }

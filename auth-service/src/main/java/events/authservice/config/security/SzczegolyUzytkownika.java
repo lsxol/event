@@ -21,7 +21,7 @@ public class SzczegolyUzytkownika implements UserDetails {
     this.userId = uzytkownik.getId().wartosc();
     this.email = uzytkownik.getEmail().wartosc();
     this.password = uzytkownik.getHasloHash().wartosc();
-    this.authorities = List.of(new SimpleGrantedAuthority("ROLE_" + uzytkownik.getRole()));
+    this.authorities = List.of(new SimpleGrantedAuthority("ROLE_" + uzytkownik.getRola()));
   }
 
   @Override

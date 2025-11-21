@@ -1,6 +1,6 @@
 package events.authservice.domain.model;
 
-import jakarta.validation.ValidationException;
+import events.authservice.domain.exception.UzytkownikExceptionUtil;
 import java.util.regex.Pattern;
 
 public record Email(String wartosc) {
@@ -10,7 +10,7 @@ public record Email(String wartosc) {
 
   public Email {
     if (wartosc == null || !EMAIL_PATTERN.matcher(wartosc).matches()) {
-      throw new ValidationException("Niepoprawny adres email");
+      throw UzytkownikExceptionUtil.emailZlyFormat();
     }
   }
 

@@ -38,6 +38,7 @@ server:
   servlet:
     context-path: /api
 
+
 application:
   jwt:
     secret-key: MzE5d0FzN0ZQcDJyOUlYZnlpU2R5V0FLQXhGNWRtMHc
@@ -45,3 +46,7 @@ application:
   system:
     user:
       uuid: 3f4b1a54-8e3e-4e3c-9f31-0b4a4d7d8d21
+
+logging:
+  level:
+    web: debug

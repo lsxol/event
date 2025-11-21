@@ -46,7 +46,7 @@ public class JpaUzytkownikRepositoryAdapter implements UzytkownikRepositoryPort 
     return new UzytkownikEntity(uzytkownik.getId().wartosc(),
         uzytkownik.getEmail().wartosc(),
         uzytkownik.getHasloHash().wartosc(),
-        RoleJPA.valueOf(uzytkownik.getRole().name()));
+        RoleJPA.valueOf(uzytkownik.getRola().name()));
   }
 
 }

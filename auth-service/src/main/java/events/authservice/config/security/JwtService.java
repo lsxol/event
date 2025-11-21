@@ -1,6 +1,7 @@
 package events.authservice.config.security;
 
 import events.authservice.domain.model.Uzytkownik;
+import events.authservice.domain.ports.driven.TokenProviderPort;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-class JwtService {
+class JwtService implements TokenProviderPort {
 
   private final SecretKey secretKey;
   private final long expirationTime;
@@ -23,13 +24,14 @@ class JwtService {
     this.expirationTime = expirationTime;
   }
 
-  public String generateToken(Uzytkownik uzytkownik) {
+  @Override
+  public String generujToken(Uzytkownik uzytkownik) {
     return Jwts.builder()
         .subject(uzytkownik.getEmail().wartosc())
         .issuedAt(new Date())
         .expiration(new Date(new Date().getTime() + expirationTime))
         .claim("userId", uzytkownik.getId().wartosc().toString())
-        .claim("rola", uzytkownik.getRole())
+        .claim("rola", uzytkownik.getRola())
         .signWith(secretKey)
         .compact();
   }

@@ -21,14 +21,14 @@ public class RejestrujUzytkownikaService implements RejestrujUzytkownikaUseCase 
 
   @Override
   @Transactional
-  public Uzytkownik rejestrujUzytkownika(RejestrujUzytkownikaCommand command) {
+  public void rejestrujUzytkownika(RejestrujUzytkownikaCommand command) {
     Email email = new Email(command.email());
     if (uzytkownikRepositoryPort.existsByLogin(email)) {
       throw UzytkownikExceptionUtil.uzytkownikOPodanymMejluIstniejeException();
     }
     HasloHash hasloHash = passwordHasherPort.zahashuj(new HasloPlain(command.hasloPlain()));
     Uzytkownik uzytkownik = Uzytkownik.rejestruj(email, hasloHash, command.rola());
-    return uzytkownikRepositoryPort.save(uzytkownik);
+    uzytkownikRepositoryPort.save(uzytkownik);
   }
 
 }

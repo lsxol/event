@@ -46,7 +46,7 @@ class WebSecurityConfiguration {
   public UserDetailsService userDetailsService() {
     return email -> {
       Uzytkownik uzytkownik = uzytkownikRepositoryPort.findByEmail(new Email(email))
-          .orElseThrow(UzytkownikExceptionUtil.nieZnalezionoUzytkownikaException(UzytkownikExceptionUtil.EMAIL, email));
+          .orElseThrow(UzytkownikExceptionUtil.nieZnalezionoUzytkownikaException());
       return new SzczegolyUzytkownika(uzytkownik);
     };
   }

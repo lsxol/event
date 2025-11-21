@@ -19,7 +19,9 @@ public class UzytkownikException extends RuntimeException {
     UZYTKOWNIK_NIE_ZNALEZIONY(ErrorCategory.NOT_FOUND),
     EMAIL_ZAJETY(ErrorCategory.CONFLICT),
     HASLO_ZA_SLABE(ErrorCategory.VALIDATION_ERROR),
-    BLAD_TWORZENIA(ErrorCategory.VALIDATION_ERROR);
+    EMAIL_ZLY_FORMAT(ErrorCategory.VALIDATION_ERROR),
+    BLAD_TWORZENIA(ErrorCategory.VALIDATION_ERROR),
+    BLAD_LOGOWANIA(ErrorCategory.VALIDATION_ERROR);
     private final ErrorCategory category;
   }
 
