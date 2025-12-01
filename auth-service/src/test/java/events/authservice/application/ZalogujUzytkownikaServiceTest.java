@@ -9,8 +9,8 @@ import events.authservice.domain.exception.UzytkownikException;
 import events.authservice.domain.model.Email;
 import events.authservice.domain.model.HasloHash;
 import events.authservice.domain.model.RoleUzytkownikowEnum;
-import events.authservice.domain.model.UserId;
 import events.authservice.domain.model.Uzytkownik;
+import events.authservice.domain.model.UzytkownikId;
 import events.authservice.domain.ports.driven.PasswordHasherPort;
 import events.authservice.domain.ports.driven.TokenProviderPort;
 import events.authservice.domain.ports.driven.UzytkownikRepositoryPort;
@@ -42,7 +42,7 @@ class ZalogujUzytkownikaServiceTest {
     String email = "test@test.test";
     String haslo = "silneHaslo12!";
     String wygenerowanyToken = "jwt_token_123";
-    Uzytkownik uzytkownik = Uzytkownik.doPobrania(new UserId(UUID.randomUUID()),
+    Uzytkownik uzytkownik = Uzytkownik.doPobrania(new UzytkownikId(UUID.randomUUID()),
         new Email(email),
         new HasloHash("hasloHash"),
         RoleUzytkownikowEnum.KLIENT);
@@ -58,7 +58,7 @@ class ZalogujUzytkownikaServiceTest {
   @Test
   void powinienRzucicBladBlednegoHasla() {
     String email = "test@test.test";
-    Uzytkownik uzytkownik = Uzytkownik.doPobrania(new UserId(UUID.randomUUID()),
+    Uzytkownik uzytkownik = Uzytkownik.doPobrania(new UzytkownikId(UUID.randomUUID()),
         new Email(email),
         new HasloHash("hasloHash!213123"),
         RoleUzytkownikowEnum.KLIENT);

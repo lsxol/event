@@ -13,7 +13,6 @@ public interface ZalogujUzytkownikaUseCase {
         throw UzytkownikExceptionUtil.brakWymaganychDanychDoZalogowaniaUzytkownika();
       }
     }
-
   }
 
 }

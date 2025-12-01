@@ -6,26 +6,26 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class UzytkownikException extends RuntimeException {
 
-  private final ErrorCode errorCode;
+  private final KodBledu kodBledu;
 
-  UzytkownikException(String message, ErrorCode errorCode) {
+  UzytkownikException(String message, KodBledu kodBledu) {
     super(message);
-    this.errorCode = errorCode;
+    this.kodBledu = kodBledu;
   }
 
   @Getter
   @RequiredArgsConstructor
-  public enum ErrorCode {
-    UZYTKOWNIK_NIE_ZNALEZIONY(ErrorCategory.NOT_FOUND),
-    EMAIL_ZAJETY(ErrorCategory.CONFLICT),
-    HASLO_ZA_SLABE(ErrorCategory.VALIDATION_ERROR),
-    EMAIL_ZLY_FORMAT(ErrorCategory.VALIDATION_ERROR),
-    BLAD_TWORZENIA(ErrorCategory.VALIDATION_ERROR),
-    BLAD_LOGOWANIA(ErrorCategory.VALIDATION_ERROR);
-    private final ErrorCategory category;
+  public enum KodBledu {
+    UZYTKOWNIK_NIE_ZNALEZIONY(KategoriaBledu.NOT_FOUND),
+    EMAIL_ZAJETY(KategoriaBledu.CONFLICT),
+    HASLO_ZA_SLABE(KategoriaBledu.VALIDATION_ERROR),
+    EMAIL_ZLY_FORMAT(KategoriaBledu.VALIDATION_ERROR),
+    BLAD_TWORZENIA(KategoriaBledu.VALIDATION_ERROR),
+    BLAD_LOGOWANIA(KategoriaBledu.VALIDATION_ERROR);
+    private final KategoriaBledu kategoria;
   }
 
-  public enum ErrorCategory {
+  public enum KategoriaBledu {
     NOT_FOUND,
     CONFLICT,
     VALIDATION_ERROR,

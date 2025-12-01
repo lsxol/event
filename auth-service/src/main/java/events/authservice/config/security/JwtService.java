@@ -30,7 +30,7 @@ class JwtService implements TokenProviderPort {
         .subject(uzytkownik.getEmail().wartosc())
         .issuedAt(new Date())
         .expiration(new Date(new Date().getTime() + expirationTime))
-        .claim("userId", uzytkownik.getId().wartosc().toString())
+        .claim("uzytkownikId", uzytkownik.getId().wartosc().toString())
         .claim("rola", uzytkownik.getRola())
         .signWith(secretKey)
         .compact();

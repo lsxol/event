@@ -6,6 +6,7 @@ import events.authservice.domain.model.HasloHash;
 import events.authservice.domain.model.HasloPlain;
 import events.authservice.domain.model.Uzytkownik;
 import events.authservice.domain.ports.driven.PasswordHasherPort;
+import events.authservice.domain.ports.driven.PublikacjaZdarzenUzytkownikaPort;
 import events.authservice.domain.ports.driven.UzytkownikRepositoryPort;
 import events.authservice.domain.ports.driving.RejestrujUzytkownikaUseCase;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class RejestrujUzytkownikaService implements RejestrujUzytkownikaUseCase 
 
   private final UzytkownikRepositoryPort uzytkownikRepositoryPort;
   private final PasswordHasherPort passwordHasherPort;
+  private final PublikacjaZdarzenUzytkownikaPort publikacjaZdarzenUzytkownikaPort;
 
   @Override
   @Transactional
@@ -28,7 +30,8 @@ public class RejestrujUzytkownikaService implements RejestrujUzytkownikaUseCase 
     }
     HasloHash hasloHash = passwordHasherPort.zahashuj(new HasloPlain(command.hasloPlain()));
     Uzytkownik uzytkownik = Uzytkownik.rejestruj(email, hasloHash, command.rola());
-    uzytkownikRepositoryPort.save(uzytkownik);
+    Uzytkownik zapisanyUzytkownik = uzytkownikRepositoryPort.save(uzytkownik);
+    publikacjaZdarzenUzytkownikaPort.publikujEventRejestracjiUzytkownika(zapisanyUzytkownik.getId(), zapisanyUzytkownik.getEmail());
   }
 
 }

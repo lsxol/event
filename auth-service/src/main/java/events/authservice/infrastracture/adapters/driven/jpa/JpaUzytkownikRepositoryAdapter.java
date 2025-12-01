@@ -3,8 +3,8 @@ package events.authservice.infrastracture.adapters.driven.jpa;
 import events.authservice.domain.model.Email;
 import events.authservice.domain.model.HasloHash;
 import events.authservice.domain.model.RoleUzytkownikowEnum;
-import events.authservice.domain.model.UserId;
 import events.authservice.domain.model.Uzytkownik;
+import events.authservice.domain.model.UzytkownikId;
 import events.authservice.domain.ports.driven.UzytkownikRepositoryPort;
 import events.authservice.infrastracture.adapters.driven.jpa.UzytkownikEntity.RoleJPA;
 import java.util.Optional;
@@ -36,13 +36,13 @@ public class JpaUzytkownikRepositoryAdapter implements UzytkownikRepositoryPort 
   }
 
   private Uzytkownik mapToDomain(UzytkownikEntity zapisanyUzytkownik) {
-    return Uzytkownik.doPobrania(new UserId(zapisanyUzytkownik.getId()),
+    return Uzytkownik.doPobrania(new UzytkownikId(zapisanyUzytkownik.getId()),
         new Email(zapisanyUzytkownik.getEmail()),
         new HasloHash(zapisanyUzytkownik.getPasswordHash()),
         RoleUzytkownikowEnum.valueOf(zapisanyUzytkownik.getRole().name()));
   }
 
-  private static UzytkownikEntity mapToEntity(Uzytkownik uzytkownik) {
+  private UzytkownikEntity mapToEntity(Uzytkownik uzytkownik) {
     return new UzytkownikEntity(uzytkownik.getId().wartosc(),
         uzytkownik.getEmail().wartosc(),
         uzytkownik.getHasloHash().wartosc(),

@@ -1,0 +1,60 @@
+spring:
+  docker:
+    compose:
+      enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:15433/organizer_db?currentSchema=organizer
+    username: organizeruser
+    password: organizerpassword
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: HikariDataSource
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: organizer-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.type.mapping: rejestrowanie_uzytkownika:events.organizerservice.infrastracture.adapters.driving.event.dto.RejestrowanieUzytkownikaZdarzenie
+        spring.json.trusted.packages: "*"
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        check_nullability: true
+        default_schema: organizer
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _audit
+            revision_field_name: revision_id
+            revision_type_field_name: revision_type
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+  liquibase:
+    default-schema: organizer
+    enabled: true
+    change-log: classpath:/db/changelog/changelog-master.yaml
+
+server:
+  port: 8001
+  servlet:
+    context-path: /api
+
+
+application:
+  jwt:
+    secret-key: MzE5d0FzN0ZQcDJyOUlYZnlpU2R5V0FLQXhGNWRtMHc
+
+logging:
+  level:
+    web: debug
+    org.apache.kafka: WARN

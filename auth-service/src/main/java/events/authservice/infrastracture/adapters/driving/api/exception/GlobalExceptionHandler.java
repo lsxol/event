@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(UzytkownikException.class)
   public ResponseEntity<ErrorResponse> handleUzytkownikException(UzytkownikException ex) {
 
-    HttpStatus status = switch (ex.getErrorCode().getCategory()) {
+    HttpStatus status = switch (ex.getKodBledu().getKategoria()) {
       case NOT_FOUND -> HttpStatus.NOT_FOUND;
       case CONFLICT -> HttpStatus.CONFLICT;
       case VALIDATION_ERROR -> HttpStatus.BAD_REQUEST;
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 
     return ResponseEntity
         .status(status)
-        .body(new ErrorResponse(ex.getMessage(), ex.getErrorCode().name()));
+        .body(new ErrorResponse(ex.getMessage(), ex.getKodBledu().name()));
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

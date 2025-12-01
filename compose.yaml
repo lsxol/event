@@ -34,28 +34,47 @@ services:
       - '15432:5432'
     volumes:
       - postgres-auth-data:/var/lib/postgresql/data
-      - ./init_db:/docker-entrypoint-initdb.d
+      - ./init_db/auth:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U authuser -d auth_db"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-
-  auth-service:
-    build:
-      context: ./auth-service
-      dockerfile: Dockerfile
-    container_name: auth-service-app
-    ports:
-      - "8081:8081"
+  postgres-organizer:
+    image: 'postgres:17'
+    container_name: postgres-organizer-db
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      kafka:
-        condition: service_started
-      postgres-auth:
-        condition: service_healthy
+      - 'POSTGRES_USER=organizeruser'
+      - 'POSTGRES_PASSWORD=organizerpassword'
+      - 'POSTGRES_DB=organizer_db'
+    ports:
+      - '15433:5432'
+    volumes:
+      - postgres-organizer-data:/var/lib/postgresql/data
+      - ./init_db/organizer:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U organizeruser -d organizer_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+#
+#  auth-service:
+#    build:
+#      context: ./auth-service
+#      dockerfile: Dockerfile
+#    container_name: auth-service-app
+#    ports:
+#      - "8081:8081"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    depends_on:
+#      kafka:
+#        condition: service_started
+#      postgres-auth:
+#        condition: service_healthy
 
 volumes:
   postgres-auth-data:
+  postgres-organizer-data:

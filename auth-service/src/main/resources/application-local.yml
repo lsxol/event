@@ -1,4 +1,7 @@
 spring:
+  docker:
+    compose:
+      enabled: false
   datasource:
     url: jdbc:postgresql://localhost:15432/auth_db?currentSchema=auth
     username: authuser
@@ -9,7 +12,11 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092
-
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: rejestrowanie_uzytkownika:events.authservice.infrastracture.adapters.driven.event.dto.RejestrowanieUzytkownikaZdarzenie
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
@@ -50,3 +57,4 @@ application:
 logging:
   level:
     web: debug
+    org.apache.kafka: WARN
